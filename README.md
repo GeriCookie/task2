@@ -1,3 +1,6 @@
+First install the backend and run it.
+https://github.com/GeriCookie/backend/tree/master
+
 # vue-amcharts
 
 > A Vue.js project
