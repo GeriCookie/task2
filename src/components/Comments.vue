@@ -1,7 +1,7 @@
 <template>
 <div id="comments">
   <ul v-for="comment in comments" :key="comment.id">
-      <li>[{{comment.time_of_conversation}}] {{comment.text}}</li>
+      <li>[{{comment.time_of_conversation}}] {{comment.text}}<button v-on:click="deleteComment(comment)">X</button></li>
 </ul>
 </div>
 </template>
@@ -11,8 +11,14 @@ import { bus } from "../main.js";
 import axios from "axios";
 
 export default {
-  data: {
-    comments: []
+  data() {
+    return {
+        comments: []
+    }
+  },
+  created() {
+    this.getComments()
+    bus.$once("addComment", this.addComment)
   },
   methods: {
     addComment(params) {
@@ -21,8 +27,8 @@ export default {
           text: params.comment,
           time_of_conversation: params.time
         })
-        .then(function(response) {
-          console.log(response);
+        .then(response => {
+          this.comments.unshift(response.data)
         })
         .catch(function(error) {
           console.log(error);
@@ -31,21 +37,23 @@ export default {
     getComments() {    
       axios.get(`http://127.0.0.1:8000/api/conversations/10/comments/`)
       .then(response => {
-      // JSON responses are automatically parsed.
-        this.comments = response.data.comments
+        this.comments = response.data
         console.log(this.comments)
         console.log(response)
         
       })
     },
-    deleteComment() {}
+    deleteComment(comment) {
+      axios.delete(`http://127.0.0.1:8000/api/conversations/10/comments/`+comment.id+`/`,
+        {data: comment}
+      )
+      .then(response => {
+        const index = this.comments.indexOf(comment);
+        this.comments.splice(index, 1);
+      })
+    }
   },
-  mounted() {
-      this.getComments()
-  },
-  created() {
-    bus.$once("addComment", this.addComment)
-  }
+  
 };
 </script>
 

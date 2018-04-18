@@ -1,15 +1,18 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
     <waveform></waveform>
+    <comments></comments>
   </div>
 </template>
 
 <script>
 import Chart from './components/Chart.vue';
+import Comments from './components/Comments.vue'
 export default {
+  props: ['comments'],
   components: {
-    'waveform': Chart
+    'waveform': Chart,
+    'comments': Comments
   }  
   
 }

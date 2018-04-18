@@ -2,21 +2,15 @@
   <div id="chart">
     <div id="chartdiv" style="height: 500px"></div>
     <input type="text" id="comment">
-    <comments v-model="comments"></comments>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
 import {bus} from '../main.js';
-import Comments from './Comments.vue'
 export default {
-  components: {
-      "comments": Comments
-  },
   data() {
     return {
-      comments: [],
       errors: []
     };
   },
@@ -60,9 +54,6 @@ export default {
           lineAlpha: 1,
           lineColor: "#fff",
           showBalloon: false
-          //balloonFunction: function(item) {
-          //return item.category +  ' ' + item.values.open + '-' + item.values.value;
-          //}
         },
         rotate: true,
         categoryAxis: {
@@ -98,19 +89,6 @@ export default {
           valueZoomable: true,
           categoryBalloonDateFormat: "JJ:NN:SS"
         },
-        legend: {
-          position: "top",
-          data: [
-            {
-              color: "#249948",
-              title: "Normal"
-            },
-            {
-              color: "#e10b0b",
-              title: "Alert"
-            }
-          ]
-        },
         export: {
           enabled: true
         }
@@ -129,8 +107,8 @@ export default {
             var key = ev.which || ev.keyCode;
             if(key===enterKey){
                 var comment = commentInput.value;
-                console.log(comment)
                 bus.$emit('addComment', {comment: comment, time: time});
+                commentInput.style.visibility = 'hidden'
             }
         });
       });
