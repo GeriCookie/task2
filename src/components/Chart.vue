@@ -15,9 +15,6 @@ export default {
     };
   },
   methods: {
-    commentChart(comment){
-       
-    },
     drawChart(rowsUser, rowsCustomer) {
       AmCharts.addInitHandler(
         function(chart) {
@@ -115,7 +112,7 @@ export default {
     }
   },
   created() {
-    axios.get(`http://127.0.0.1:8000/api/conversations/10/`)
+    axios.get(`http://cookie-rocks.com/api/conversations/1/`)
     .then(response => {
       // JSON responses are automatically parsed.
       var rowsUser = response.data.user.map(u => {

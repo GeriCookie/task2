@@ -23,7 +23,7 @@ export default {
   methods: {
     addComment(params) {
       axios
-        .post(`http://127.0.0.1:8000/api/conversations/10/comments/`, {
+        .post(`http://cookie-rocks.com/api/conversations/1/comments/`, {
           text: params.comment,
           time_of_conversation: params.time
         })
@@ -35,7 +35,7 @@ export default {
         });
     },
     getComments() {    
-      axios.get(`http://127.0.0.1:8000/api/conversations/10/comments/`)
+      axios.get(`http://cookie-rocks.com/api/conversations/1/comments/`)
       .then(response => {
         this.comments = response.data
         console.log(this.comments)
@@ -44,7 +44,7 @@ export default {
       })
     },
     deleteComment(comment) {
-      axios.delete(`http://127.0.0.1:8000/api/conversations/10/comments/`+comment.id+`/`,
+      axios.delete(`http://cookie-rocks.com/api/conversations/1/comments/`+comment.id+`/`,
         {data: comment}
       )
       .then(response => {
